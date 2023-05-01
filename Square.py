@@ -1,13 +1,14 @@
 import pygame
 
 class Square:
-    def __init__(self, size, background_color):
+    def __init__(self, size, background_color, ghost_square_color):
         self.surface = pygame.Surface((size, size))
         self.size = size
         self.background_color = background_color
         pygame.draw.rect(self.surface, background_color, (0, 0, size, size))
         self.piece = None
         self.ghost = False
+        self.ghost_square_color = ghost_square_color
 
     def get_surface(self):
         return self.surface
@@ -28,7 +29,7 @@ class Square:
     
     def add_ghost(self):
         assert self.piece == None, 'ghost - piece collision'
-        pygame.draw.circle(self.surface, (128, 128, 128, 128), (self.size / 2, self.size / 2), self.size * 0.3)
+        pygame.draw.circle(self.surface, self.ghost_square_color, (self.size / 2, self.size / 2), self.size * 0.3)
         self.ghost = True
     
     def clear_surface(self):

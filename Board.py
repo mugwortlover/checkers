@@ -3,7 +3,7 @@ from Square import Square
 from Piece import Piece
 
 class Board:
-    def __init__(self, square_size, background_colors, piece_colors):
+    def __init__(self, square_size, background_colors, piece_colors, inner_piece_colors, ghost_square_color):
         self.square_size = square_size
         self.array = [[None for x in range(8)] for y in range(8)]
         self.surface = pygame.Surface((square_size * 8, square_size * 8))
@@ -13,18 +13,19 @@ class Board:
         self.mode = 'default'
         self.pieces_remaining = [12, 12]
         self.game_over = False
+        self.ghost_square_color = ghost_square_color
 
         #adding squares to the board
         for y in range(0, 8):
             for x in range(0, 8):
-                square = Square(square_size, background_colors[(x + y) % 2])
+                square = Square(square_size, background_colors[(x + y) % 2], self.ghost_square_color)
                 self.array[y][x] = square
                 
 
         #adding pieces to the board
         for y in range(3):
             for x in range(8):
-                piece = Piece(square_size, square_size * 0.8, piece_colors[1], 1)
+                piece = Piece(square_size, square_size * 0.8, piece_colors[1], 1, inner_piece_colors[1])
                 if (x +  y) % 2 == 1:
                     self.array[y][x].set_piece(piece)
                 else:
@@ -32,7 +33,7 @@ class Board:
 
         for y in range(5, 8):
             for x in range(8):
-                piece = Piece(square_size, square_size * 0.8, piece_colors[0], -1)
+                piece = Piece(square_size, square_size * 0.8, piece_colors[0], -1, inner_piece_colors[0])
                 if (x +  y) % 2 == 1:
                     self.array[y][x].set_piece(piece)
                 else:
