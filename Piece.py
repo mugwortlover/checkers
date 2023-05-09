@@ -22,6 +22,10 @@ class Piece:
     def get_surface(self):
         return self.surface
     
+    def set_surface(self, new_surface):
+        assert type(new_surface) == pygame.Surface, f'invalid surface arg {new_surface}'
+        self.surface = new_surface
+    
     def reset_surface(self):
         pygame.draw.circle(self.surface, self.color, (self.background_size / 2, self.background_size / 2), self.diameter / 2) #outer circle
         pygame.draw.circle(self.surface, self.inner_color, (self.background_size / 2, self.background_size / 2), self.diameter * 0.8 / 2) #inner circle
@@ -45,6 +49,12 @@ class Piece:
 
     def get_team(self):
         return self.team
+    
+    def copy(self):
+        copy = Piece(self.background_size, self.diameter, self.color, self.move_direction, self.inner_color)
+        copy.set_surface(self.surface.copy())
+
+        return copy
     
         
 

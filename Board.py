@@ -5,6 +5,11 @@ from Piece import Piece
 class Board:
     def __init__(self, square_size, background_colors, piece_colors, inner_piece_colors, ghost_square_color):
         self.square_size = square_size
+        self.background_colors = background_colors
+        self.piece_colors = piece_colors
+        self.inner_piece_colors = inner_piece_colors
+        self.ghost_square_color = ghost_square_color
+
         self.array = [[None for x in range(8)] for y in range(8)]
         self.surface = pygame.Surface((square_size * 8, square_size * 8))
         self.turn = 0
@@ -13,7 +18,7 @@ class Board:
         self.mode = 'default'
         self.pieces_remaining = [12, 12]
         self.game_over = False
-        self.ghost_square_color = ghost_square_color
+        
 
         #adding squares to the board
         for y in range(0, 8):
@@ -39,6 +44,8 @@ class Board:
                 else:
                     self.array[y][x].set_piece(None)
 
+    
+
     def get_selected(self):
         return self.selected
             
@@ -60,6 +67,10 @@ class Board:
     
     def get_surface(self):
         return self.surface
+    
+    def set_surface(self, new_surface):
+        assert type(new_surface) == pygame.Surface, f'invalid surface arg {new_surface}'
+        self.surface = new_surface
     
     def clear_selections(self):
         if self.selected != None:
@@ -180,6 +191,13 @@ class Board:
                     return (x, y)
                 
         return False
+    
+
+    def copy(self):
+        copy = Board(self.square_size, self.background_colors, self.piece_colors, self.inner_piece_colors, self.ghost_square_color)
+        copy.array = [[square.copy() for square in row] for row in self.array]
+
+        return copy
     
     
 

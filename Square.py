@@ -13,6 +13,10 @@ class Square:
     def get_surface(self):
         return self.surface
     
+    def set_surface(self, new_surface):
+        assert type(new_surface) == pygame.Surface, f'invalid surface arg {new_surface}'
+        self.surface = new_surface
+    
     def set_piece(self, piece):
         self.piece = piece
         if piece != None:
@@ -38,3 +42,10 @@ class Square:
 
     def is_ghost(self):
         return self.ghost
+    
+    def copy(self):
+        copy = Square(self.size, self.background_color, self.ghost_square_color)        
+        if self.piece != None:
+            copy.piece = self.piece.copy()
+
+        return copy

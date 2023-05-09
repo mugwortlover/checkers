@@ -24,7 +24,7 @@ def handle_clicks(x, y):
 
     if board.game_over:
         return
-
+    
     if mode == 'default':
         #if the user clicked on a piece and its the right team, select that piece
         if piece_clicked != None and piece_clicked.get_team() == turn:
